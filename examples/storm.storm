@@ -1,0 +1,7 @@
+class Storm:
+  def does_it_work:
+    "yeah!"
+
+storm_object = Storm.new
+if storm_object:
+  print(storm_object.does_it_work)
