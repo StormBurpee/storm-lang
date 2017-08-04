@@ -1,7 +1,10 @@
-class Storm:
-  def does_it_work:
-    "yeah!"
+class Hello ->
+  def hello ->
+    "Hello"
 
-storm_object = Storm.new
-if storm_object:
-  print(storm_object.does_it_work)
+class World:Hello ->
+  def world ->
+    "World!"
+
+hello = World.new
+print(hello.hello, hello.world)

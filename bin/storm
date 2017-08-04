@@ -24,7 +24,7 @@ else
     line = Readline::readline(">> ")
     Readline::HISTORY.push(line)
     value = interpreter.eval(line)
-    puts "=> #{value.ruby_value.inspect}"
+    #puts "=> #{value.ruby_value.inspect}"
   end
 
 end

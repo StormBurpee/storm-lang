@@ -1,0 +1,26 @@
+{
+  "name": "storm-lang",
+  "version": "0.0.1",
+  "description": "Creating a programming language research",
+  "main": "index.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "npm run build-grammar",
+    "build-grammar": "racc -o ./lib/parser.rb ./lib/parser/grammar.y",
+    "start": "./bin/storm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StormBurpee/storm-lang.git"
+  },
+  "author": "Storm Burpee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StormBurpee/storm-lang/issues"
+  },
+  "homepage": "https://github.com/StormBurpee/storm-lang#readme"
+}

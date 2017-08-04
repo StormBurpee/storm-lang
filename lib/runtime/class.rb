@@ -1,8 +1,9 @@
 class StormClass < StormObject
   attr_reader :runtime_methods
 
-  def initialize
+  def initialize(superclass=nil)
     @runtime_methods = {}
+    @runtime_superclass = superclass
     if defined?(Runtime)
       runtime_class = Runtime['Class']
     else
@@ -15,9 +16,17 @@ class StormClass < StormObject
   def lookup(method_name)
     method = @runtime_methods[method_name]
     unless method
-      raise "Method not found: #{method_name}"
+      if @runtime_superclass
+        return @runtime_superclass.lookup(method_name)
+      else
+        raise "Method not found: #{method_name}"
+      end
     end
     method
+  end
+
+  def inherits(superclass)
+    @runtime_superclass = superclass
   end
 
   def new

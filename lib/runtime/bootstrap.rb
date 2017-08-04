@@ -21,8 +21,6 @@ Runtime["nil"] = Runtime["NilClass"].new_with_value(nil)
 Runtime["Class"].runtime_methods["new"] = proc do |receiver, arguments|
   receiver.new
 end
-
-Runtime["Object"].runtime_methods["print"] = proc do |receiver, arguments|
-  puts arguments.first.ruby_value
-  Runtime["nil"]
+Runtime["Class"].runtime_methods["inherits"] = proc do |receiver, arguments|
+  receiver.inherits(arguments.first)
 end

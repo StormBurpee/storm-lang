@@ -36,6 +36,10 @@ end
 #
 class CallNode < Struct.new(:receiver, :method, :arguments); end
 
+class OperatorNode < Struct.new(:a, :comparison, :b); end
+
+class StringCmpNode < Struct.new(:a, :b); end
+
 # Retrieving the value of a constant.
 class GetConstantNode < Struct.new(:name); end
 
@@ -50,6 +54,7 @@ class DefNode < Struct.new(:name, :params, :body); end
 
 # Class definition.
 class ClassNode < Struct.new(:name, :body); end
+class SuperClassNode < Struct.new(:name, :inheritence, :body); end
 
 # "if" control structure. Look at this node if you want to implement other control
 # structures like while, for, loop, etc.

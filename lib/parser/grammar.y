@@ -104,18 +104,19 @@ rule
 
   Operator:
   # Binary operators
-    Expression '||' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '&&' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '==' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '!=' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '>' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '>=' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '<' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '<=' Expression    { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '+' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '-' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '*' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
-  | Expression '/' Expression     { result = CallNode.new(val[0], val[1], [val[2]]) }
+    Expression '||' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '&&' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '==' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '!=' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '>' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '>=' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '<' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '<=' Expression    { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | STRING '+' STRING             { result = StringCmpNode.new(val[0], val[2]) }
+  | Expression '+' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '-' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '*' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
+  | Expression '/' Expression     { result = OperatorNode.new(val[0], val[1], val[2]) }
   ;
 
   Constant:
@@ -143,7 +144,8 @@ rule
 
   # Class definition
   Class:
-    CLASS CONSTANT Block          { result = ClassNode.new(val[1], val[2]) }
+    CLASS CONSTANT Block              { result = ClassNode.new(val[1], val[2]) }
+  | CLASS CONSTANT ':' CONSTANT Block { result = SuperClassNode.new(val[1], val[3], val[4]) }
   ;
 
   # if block
@@ -163,8 +165,8 @@ rule
 end
 
 ---- header
-  require "lexer"
-  require "nodes"
+  require_relative "lexer"
+  require_relative "nodes"
 
 ---- inner
   # This code will be put as-is in the Parser class.

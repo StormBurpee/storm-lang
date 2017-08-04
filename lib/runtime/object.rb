@@ -9,4 +9,8 @@ class StormObject
   def call(method, arguments=[])
     @runtime_class.lookup(method).call(self, arguments)
   end
+
+  def to_string
+    @ruby_value.to_s
+  end
 end

@@ -61,7 +61,7 @@ class Lexer
       #
       # This elsif takes care of the first case. The number of spaces will determine
       # the indent level.
-      elsif indent = chunk[/\A\:\n( +)/m, 1] # Matches ": <newline> <spaces>"
+      elsif indent = chunk[/\A\->\n( +)/m, 1] # Matches ": <newline> <spaces>"
         # When we create a new block we expect the indent level to go up.
         if indent.size <= current_indent
           raise "Bad indent level, got #{indent.size} indents, " +
@@ -90,7 +90,7 @@ class Lexer
           tokens << [:NEWLINE, "\n"]
         else # indent.size > current_indent, error!
           # Cannot increase indent level without using ":", so this is an error.
-          raise "Missing ':'"
+          raise "Missing '->'"
         end
         i += indent.size + 1
 
