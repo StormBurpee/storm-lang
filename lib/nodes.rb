@@ -26,6 +26,7 @@ class NilNode < LiteralNode
     super(nil)
   end
 end
+class StaticNode < LiteralNode; end
 
 # Node of a method call or local variable access, can take any of these forms:
 #
@@ -50,7 +51,7 @@ class SetConstantNode < Struct.new(:name, :value); end
 class SetLocalNode < Struct.new(:name, :value); end
 
 # Method definition.
-class DefNode < Struct.new(:name, :params, :body); end
+class DefNode < Struct.new(:static, :name, :params, :body); end
 
 # Class definition.
 class ClassNode < Struct.new(:name, :body); end

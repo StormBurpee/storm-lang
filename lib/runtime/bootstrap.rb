@@ -21,6 +21,9 @@ Runtime["nil"] = Runtime["NilClass"].new_with_value(nil)
 Runtime["Class"].runtime_methods["new"] = proc do |receiver, arguments|
   receiver.new
 end
+#Runtime["Class"].static_methods["new"] = proc do |receiver, arguments |
+#  receiver.new
+#end
 Runtime["Class"].runtime_methods["inherits"] = proc do |receiver, arguments|
   receiver.inherits(arguments.first)
 end

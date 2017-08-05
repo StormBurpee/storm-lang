@@ -58,6 +58,12 @@ class NilNode
   end
 end
 
+class StaticNode
+  def _eval(context)
+    Runtime["static"]
+  end
+end
+
 class CallNode
   def _eval(context)
     # If there's no receiver and the method name is the name of a local variable, then
@@ -114,14 +120,25 @@ end
 class SetLocalNode
   def _eval(context)
     context.locals[name] = value._eval(context)
+    
   end
 end
 
 class DefNode
   def _eval(context)
     # Defining a method is adding a method to the current class.
-    method = StormMethod.new(params, body)
-    context.current_class.runtime_methods[name] = method
+    # TODO: Fix static Methods.
+    if static
+      method = StormMethod.new(params, body)
+      # TODO:   make this a whole lot nicer. Right now, I'm pretty sure it's adding it to all classes...
+      #         potentially, could change Runtime["Class"] to something like Runtime[context.current_class] but
+      #         that might bring us back to the same issue.
+      Runtime["Class"].runtime_methods[name] = method
+      #context.current_class.static_methods[name] = method
+    else
+      method = StormMethod.new(params, body)
+      context.current_class.runtime_methods[name] = method
+    end
   end
 end
 
@@ -140,7 +157,6 @@ class ClassNode
     # to control where methods are added when defined with the def keyword. In this
     # case, we add them to the newly created class.
     class_context = Context.new(storm_class, storm_class)
-
     body.eval(class_context)
 
     storm_class

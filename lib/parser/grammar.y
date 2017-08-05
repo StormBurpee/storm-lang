@@ -1,31 +1,32 @@
 class Parser
+  # Declare tokens produced by the lexer
+  token IF ELSE
+  token DEF
+  token STATIC
+  token CLASS
+  token SELF
+  token NEWLINE
+  token NUMBER
+  token STRING
+  token TRUE FALSE NIL
+  token IDENTIFIER
+  token CONSTANT
+  token INDENT DEDENT
 
-# Declare tokens produced by the lexer
-token IF ELSE
-token DEF
-token CLASS
-token NEWLINE
-token NUMBER
-token STRING
-token TRUE FALSE NIL
-token IDENTIFIER
-token CONSTANT
-token INDENT DEDENT
-
-# Precedence table
-# Based on http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence
-prechigh
-  left  '.'
-  right '!'
-  left  '*' '/'
-  left  '+' '-'
-  left  '>' '>=' '<' '<='
-  left  '==' '!='
-  left  '&&'
-  left  '||'
-  right '='
-  left  ','
-preclow
+  # Precedence table
+  # Based on http://en.wikipedia.org/wiki/Operators_in_C_and_C%2B%2B#Operator_precedence
+  prechigh
+    left  '.'
+    right '!'
+    left  '*' '/'
+    left  '+' '-'
+    left  '>' '>=' '<' '<='
+    left  '==' '!='
+    left  '&&'
+    left  '||'
+    right '='
+    left  ','
+  preclow
 
 rule
   # All rules are declared in this format:
@@ -81,6 +82,7 @@ rule
   | TRUE                          { result = TrueNode.new }
   | FALSE                         { result = FalseNode.new }
   | NIL                           { result = NilNode.new }
+  | STATIC                        { result = StaticNode.new }
   ;
 
   # A method call
@@ -131,9 +133,12 @@ rule
 
   # Method definition
   Def:
-    DEF IDENTIFIER Block          { result = DefNode.new(val[1], [], val[2]) }
+    DEF STATIC IDENTIFIER Block   { result = DefNode.new(true, val[2], [], val[3])}
+  | DEF IDENTIFIER Block          { result = DefNode.new(false, val[1], [], val[2]) }
+  | DEF STATIC IDENTIFIER
+      "(" ParamList ")" Block     { result = DefNode.new(true, val[2], val[4], val[6])}
   | DEF IDENTIFIER
-      "(" ParamList ")" Block     { result = DefNode.new(val[1], val[3], val[5]) }
+      "(" ParamList ")" Block     { result = DefNode.new(false, val[1], val[3], val[5]) }
   ;
 
   ParamList:

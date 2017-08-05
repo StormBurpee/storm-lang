@@ -11,7 +11,8 @@
   "scripts": {
     "build": "npm run build-grammar",
     "build-grammar": "racc -o ./lib/parser.rb ./lib/parser/grammar.y",
-    "start": "./bin/storm"
+    "start": "./bin/storm",
+    "test": "./bin/storm ./examples/storm.storm"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,7 @@
   "bugs": {
     "url": "https://github.com/StormBurpee/storm-lang/issues"
   },
-  "homepage": "https://github.com/StormBurpee/storm-lang#readme"
+  "homepage": "https://github.com/StormBurpee/storm-lang#readme",
+  "devDependencies": {
+  }
 }

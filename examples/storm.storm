@@ -1,10 +1,18 @@
 class Hello ->
-  def hello ->
-    "Hello"
+  worldString = "World!"
+  def static laugh ->
+    "haha"
+  def world ->
+    Console.log("Hello World!")
 
 class World:Hello ->
   def world ->
     "World!"
 
-hello = World.new
-print(hello.hello, hello.world)
+class Unrelated ->
+  def hi ->
+    "hi"
+
+hello = Hello.new
+hello.world
+hello.worldString
