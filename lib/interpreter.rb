@@ -120,7 +120,7 @@ end
 class SetLocalNode
   def _eval(context)
     context.locals[name] = value._eval(context)
-    
+
   end
 end
 
@@ -171,7 +171,9 @@ class SuperClassNode
     if defined?(context[inheritence])
       if context[inheritence]
       else
-        raise "Cannot find class with name '" + inheritence + "'"
+        error = Error.new("Failed to inherit class, cannot find super: " + inheritence)
+        error.throw()
+        raise
       end
     end
 

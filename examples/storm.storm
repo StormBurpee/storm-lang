@@ -1,18 +1,20 @@
-class Hello ->
-  worldString = "World!"
-  def static laugh ->
-    "haha"
-  def world ->
+class Hello->
+  def static world->
     Console.log("Hello World!")
 
-class World:Hello ->
-  def world ->
-    "World!"
+Hello.world()
 
-class Unrelated ->
-  def hi ->
-    "hi"
+class Server->
+  def initialize(host, port)->
 
-hello = Hello.new
-hello.world
-hello.worldString
+  end
+end
+
+class Http:Server->
+  def initialize->
+
+  end
+  def start->
+
+  end
+end
